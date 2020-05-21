@@ -17,6 +17,7 @@ import  misuchi_yuno.exception.SQLRuntimeException;
 
 public class UserDao {
 
+
 	public int getCount(Connection connection, User user) {
 
 		PreparedStatement ps = null;
@@ -25,7 +26,7 @@ public class UserDao {
 			sql.append("select count(*) from users where login_id = ?;");
 
 			ps = connection.prepareStatement(sql.toString());
-			ps.setString(1, user.getLogin_id());
+			ps.setString(1, user.getLoginId());
 
 			ResultSet rs = ps.executeQuery();
 			int count = toCount(rs);
@@ -69,24 +70,104 @@ public class UserDao {
 			sql.append(", ?"); // name
 			sql.append(", ?"); // branch_id
 			sql.append(", ?"); // position_id
-			sql.append(", 1"); // activity
+			sql.append(", 0"); // activity
 			sql.append(", CURRENT_TIMESTAMP"); // created_date
 			sql.append(", CURRENT_TIMESTAMP"); // updated_date
 			sql.append(")");
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, user.getLogin_id());
+			ps.setString(1, user.getLoginId());
 			ps.setString(2, user.getPassword());
 			ps.setString(3, user.getName());
-			ps.setString(4, user.getBranch_id());
-			ps.setString(5, user.getPosition_id());
+			ps.setInt(4, user.getBranchId());
+			ps.setInt(5, user.getPositionId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
 		} finally {
 			close(ps);
 		}
+	}
+
+	public List<UserInformation> getBranches(Connection connection) {
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("select * from branches;");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ResultSet rs = ps.executeQuery();
+			List<UserInformation> ret = toBranches(rs);
+			return ret;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+	private List<UserInformation> toBranches(ResultSet rs)
+			throws SQLException {
+
+				List<UserInformation> ret = new ArrayList<UserInformation>();
+				try {
+					while (rs.next()) {
+						int id = rs.getInt("id");
+						String name = rs.getString("name");
+
+						UserInformation Branches = new UserInformation();
+						Branches.setId(id);
+						Branches.setName(name);
+
+						ret.add(Branches);
+
+					}
+					return ret;
+				} finally {
+					close(rs);
+				}
+	}
+
+	public List<UserInformation> getPositions(Connection connection) {
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("select * from positions;");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ResultSet rs = ps.executeQuery();
+			List<UserInformation> ret = toPositions(rs);
+			return ret;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+	private List<UserInformation> toPositions(ResultSet rs)
+			throws SQLException {
+
+				List<UserInformation> ret = new ArrayList<UserInformation>();
+				try {
+					while (rs.next()) {
+						int id = rs.getInt("id");
+						String name = rs.getString("name");
+
+						UserInformation Positions = new UserInformation();
+						Positions.setId(id);
+						Positions.setName(name);
+
+						ret.add(Positions);
+
+					}
+					return ret;
+				} finally {
+					close(rs);
+				}
 	}
 
 	public List<UserInformation> getUserInformation(Connection connection) {
@@ -137,12 +218,6 @@ public class UserDao {
 					String positionName = rs.getString("position_name");
 					String activity = rs.getString("activity");
 
-					if (activity.equals("0")) {
-						activity = "活動中";
-					} else {
-						activity = "停止中";
-					}
-
 					UserInformation information = new UserInformation();
 					information.setId(id);
 					information.setLoginId(loginId);
@@ -151,7 +226,7 @@ public class UserDao {
 					information.setBranchName(branchName);
 					information.setPositionId(positionId);
 					information.setPositionName(positionName);
-					information.setActivity(activity);
+					information.setActivity(Integer.valueOf(activity));
 
 					ret.add(information);
 
@@ -161,6 +236,61 @@ public class UserDao {
 				close(rs);
 			}
 		}
+
+	public User getThisUserInformation(Connection connection, User user) {
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("SELECT ");
+			sql.append("id, ");
+			sql.append("login_id, ");
+			sql.append("name, ");
+			sql.append("branch_id, ");
+			sql.append("position_id ");
+			sql.append("from users ");
+			sql.append("where id = ");
+			sql.append("?");
+			sql.append(";");
+
+			ps = connection.prepareStatement(sql.toString());
+			ps.setString(1, Integer.toString(user.getId()));
+
+			ResultSet rs = ps.executeQuery();
+
+			User user2 = new User();
+			user2 = toThisUserInformationList(rs);
+
+			return user2;
+		} catch (SQLException e) {
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+
+	}
+
+	private User toThisUserInformationList(ResultSet rs)
+		throws SQLException {
+
+		User user = new User();
+		if (rs.next()) {
+			int id = rs.getInt("id");
+			String loginId = rs.getString("login_id");
+			String name = rs.getString("name");
+			int branchId = rs.getInt("branch_id");
+			int positionId = rs.getInt("position_id");
+
+			user.setId(id);
+			user.setLoginId(loginId);
+			user.setName(name);
+			user.setBranchId(branchId);
+			user.setPositionId(positionId);
+		}
+		return user;
+	}
+
+
 
 	public void update(Connection connection, User user) {
 		PreparedStatement ps = null;
@@ -177,11 +307,11 @@ public class UserDao {
 
 				ps = connection.prepareStatement(sql.toString());
 
-				ps.setString(1, user.getLogin_id());
+				ps.setString(1, user.getLoginId());
 				ps.setString(2, user.getName());
-				ps.setString(3, user.getBranch_id());
-				ps.setString(4, user.getPosition_id());
-				ps.setString(5, user.getId());
+				ps.setInt(3, user.getBranchId());
+				ps.setInt(4, user.getPositionId());
+				ps.setInt(5, user.getId());
 			} else {
 				sql.append("login_id = ");
 				sql.append("?, password = ");
@@ -194,12 +324,12 @@ public class UserDao {
 
 				ps = connection.prepareStatement(sql.toString());
 
-				ps.setString(1, user.getLogin_id());
+				ps.setString(1, user.getLoginId());
 				ps.setString(2, user.getPassword());
 				ps.setString(3, user.getName());
-				ps.setString(4, user.getBranch_id());
-				ps.setString(5, user.getPosition_id());
-				ps.setString(6, user.getId());
+				ps.setInt(4, user.getBranchId());
+				ps.setInt(5, user.getPositionId());
+				ps.setInt(6, user.getId());
 			}
 
 			int count = ps.executeUpdate();
@@ -224,7 +354,7 @@ public class UserDao {
 
 			ps = connection.prepareStatement(sql.toString());
 
-			ps.setString(1, activity.getActivity());
+			ps.setString(1, Integer.toString(activity.getActivity()));
 			ps.setString(2, activity.getLoginId());
 
 			int count = ps.executeUpdate();

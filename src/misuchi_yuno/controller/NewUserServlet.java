@@ -14,6 +14,9 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 
 import misuchi_yuno.beans.User;
+import misuchi_yuno.beans.UserInformation;
+import misuchi_yuno.service.BranchService;
+import misuchi_yuno.service.PositionService;
 import misuchi_yuno.service.UserService;
 
 @WebServlet(urlPatterns = { "/newuser" })
@@ -23,6 +26,12 @@ public class NewUserServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException , ServletException {
+
+		List<UserInformation> branch = new BranchService().getBranchList();
+		List<UserInformation> position = new PositionService().getPositionList();
+
+		request.setAttribute("branches", branch);
+		request.setAttribute("positions", position);
 		request.getRequestDispatcher("newuser.jsp").forward(request, response);
 	}
 
@@ -37,15 +46,11 @@ public class NewUserServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(isValid(request , messages) == true) {
 			User user = new User();
-			user.setLogin_id(request.getParameter("loginId"));
+			user.setLoginId(request.getParameter("loginId"));
 			user.setPassword(request.getParameter("password"));
 			user.setName(request.getParameter("name"));
-			user.setBranch_id(request.getParameter("branchId"));
-			user.setPosition_id(request.getParameter("positionId"));
-
-
-
-
+			user.setBranchId(Integer.valueOf(request.getParameter("branchId")));
+			user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 			new UserService().register(user);
 			response.sendRedirect("./");
@@ -63,8 +68,6 @@ public class NewUserServlet extends HttpServlet {
 		String branchId = request.getParameter("branchId");
 		String positionId = request.getParameter("positionId");
 
-
-
 		if (StringUtils.isEmpty(loginId))  {
 			messages.add("ログインIDを入力してください");
 		}
@@ -80,8 +83,7 @@ public class NewUserServlet extends HttpServlet {
 		if (password.matches("[亜-熙ぁ-んァ-ヶ０-９ａ-ｚＡ-Ｚ]+$")) {
 			messages.add("パスワードは記号を含む半角英数字6～20文字で入力してください");
 		} else {
-			if (password.length() < 21 && password.length() > 5) {
-			} else {
+			if (password.length() > 20 || password.length() < 6) {
 				messages.add("パスワードを6～20文字で入力してください");
 			}
 		}
@@ -116,9 +118,9 @@ public class NewUserServlet extends HttpServlet {
 
 
 		User user = new User();
-		user.setLogin_id(request.getParameter("login_id"));
-		new UserService().count(user);
-		int count = new UserService().getCount(user);
+		user.setLoginId(request.getParameter("loginId"));
+
+		int count = new UserService().count(user);
 		if (count != 0) {
 			messages.add("ログインIDが使われています");
 		}

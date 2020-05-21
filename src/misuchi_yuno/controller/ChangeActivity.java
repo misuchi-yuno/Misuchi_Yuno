@@ -21,7 +21,7 @@ public class ChangeActivity  extends HttpServlet {
 
 		Activity activity = new Activity();
 		activity.setLoginId(request.getParameter("loginId"));
-		activity.setActivity(request.getParameter("change"));
+		activity.setActivity(Integer.valueOf(request.getParameter("change")));
 
 		new UserService().activityRegister(activity);
 

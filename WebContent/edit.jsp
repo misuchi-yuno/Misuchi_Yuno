@@ -13,7 +13,7 @@
 	<label>編集</label>
 	<div class="main-contents">
 		<label>編集するユーザーのID</label>
-		<c:out value="${user.id}"></c:out>
+		<c:out value="${id}"></c:out>
 
 		<c:if test="${not empty errorMessages }">
 			<div class="errorMessages">
@@ -27,14 +27,38 @@
 		</c:if>
 
 		<form action="edit" method="post">
-			<input type="hidden" name="id" id="id" value="${user.id}">
-			<input type="hidden" name="originalLoginId" value=${user.login_id } >
-			<label for="login_id">ログインID：</label> <input type="text" name="loginId" id="login_id" value=${user.login_id } ><br/>
+			<input type="hidden" name="id" id="id" value="${userInformation.id}">
+			<input type="hidden" name="originalLoginId" value="${userInformation.loginId}" >
+			<label for="login_id">ログインID：</label> <input type="text" name="loginId" id="login_id" value=${userInformation.loginId } ><br/>
 			<label for="password">パスワード：</label> <input type="password" name="password" id="password" >
-			<label for="password2">確認用パスワード：</label> <input name="password2" id="password2"><br/>
-			<label for="name">名前：</label> <input name="name" id="name" value="${user.name}"><br/>
-			<label for="branch_id">支店番号：</label> <input name="branchId" id="brabch_id" value="${user.branch_id}"><br/>
-			<label for="position_id">部署・役職：</label> <input name="positionId" id="position_id" value="${user.position_id}"><br/>
+			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2"><br/>
+			<label for="name">名前：</label> <input name="name" id="name" value="${userInformation.name}"><br/>
+			<label>支店：</label>
+			<select name="branchId">
+				<c:forEach items="${branches}" var="branch">
+					<c:choose>
+						<c:when test="${branch.id == userInformation.branchId}">
+							<option value="${branch.id}" selected>${branch.name}</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${branch.id}">${branch.name}</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</select>
+			<br/><label>部署・役職</label>
+			<select name="positionId">
+				<c:forEach items="${positions}" var="position">
+					<c:choose>
+						<c:when test="${position.id == userInformation.positionId}">
+							<option value="${position.id}" selected>${position.name}</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${position.id}">${position.name}</option>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</select>
 			<input type="submit" value="登録">
 		</form>
 	</div>

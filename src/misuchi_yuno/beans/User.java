@@ -4,26 +4,26 @@ import java.sql.Timestamp;
 
 public class User {
 
-	private String id;
+	private int id;
 	private String loginId;
 	private String password;
 	private String name;
-	private String branchId;
-	private String positionId;
-	private String activity;
+	private int branchId;
+	private int positionId;
+	private int activity;
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-	public String getLogin_id() {
+	public String getLoginId() {
 		return loginId;
 	}
-	public void setLogin_id(String loginId) {
+	public void setLoginId(String loginId) {
 		this.loginId = loginId;
 	}
 	public String getPassword() {
@@ -38,22 +38,22 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getBranch_id() {
+	public int getBranchId() {
 		return branchId;
 	}
-	public void setBranch_id(String branchId) {
+	public void setBranchId(int branchId) {
 		this.branchId = branchId;
 	}
-	public String getPosition_id() {
+	public int getPositionId() {
 		return positionId;
 	}
-	public void setPosition_id(String positionId) {
+	public void setPositionId(int positionId) {
 		this.positionId = positionId;
 	}
-	public String getActivity() {
+	public int getActivity() {
 		return activity;
 	}
-	public void setActivity(String activity) {
+	public void setActivity(int activity) {
 		this.activity = activity;
 	}
 	public Timestamp getCreatedDate() {

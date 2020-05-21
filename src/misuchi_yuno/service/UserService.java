@@ -15,38 +15,16 @@ import misuchi_yuno.utils.CipherUtil;
 
 public class UserService {
 
-	public void count(User user) {
+	public int count(User user) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
-
 
 			UserDao userDao = new UserDao();
-			userDao.getCount(connection, user);
+			int count = userDao.getCount(connection, user);
 
 			commit(connection);
-		} catch (RuntimeException e) {
-			rollback(connection);
-			throw e;
-		} catch (Error e) {
-			rollback(connection);
-			throw e;
-		} finally {
-			close(connection);
-		}
-	}
-
-	public int getCount(User user) {
-		Connection connection = null;
-		try {
-			connection = getConnection();
-
-			UserDao CountDao = new UserDao();
-			int count = CountDao.getCount(connection, user);
-
-			commit(connection);
-
 			return count;
 		} catch (RuntimeException e) {
 			rollback(connection);
@@ -57,8 +35,8 @@ public class UserService {
 		} finally {
 			close(connection);
 		}
-
 	}
+
 
 	public void register(User user) {
 
@@ -95,6 +73,29 @@ public class UserService {
 			commit(connection);
 
 			return ret;
+		} catch (RuntimeException e) {
+			rollback(connection);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			throw e;
+		} finally {
+			close(connection);
+		}
+
+	}
+
+	public User getThisUserInformation(User user) {
+		Connection connection = null;
+		try {
+			connection = getConnection();
+
+			UserDao ThisInformationDao = new UserDao();
+			User ThisUser = ThisInformationDao.getThisUserInformation(connection, user);
+
+			commit(connection);
+
+			return ThisUser;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;

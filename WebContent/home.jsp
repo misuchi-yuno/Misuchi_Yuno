@@ -19,42 +19,41 @@
 		</div>
 		<div class="informations">
 			<c:forEach items="${informations}" var="information">
-				<form action="./" method="post">
+				<form action="edit" method="get">
 					<br/><c:out value="${information.id}"></c:out>
 					<c:out value="${information.loginId}"></c:out>
 					<c:out value="${information.name}"></c:out>
 					<c:out value="${information.branchName}"></c:out>
 					<c:out value="${information.positionName}"></c:out>
-					<c:out value="${information.activity}"></c:out>
+					<c:choose>
+						<c:when test="${information.activity == 0}">
+							<c:out value="活動中"></c:out>
+						</c:when>
+						<c:otherwise>
+							<c:out value="停止中"></c:out>
+						</c:otherwise>
+					</c:choose>
 					<input type="submit" value="編集">
 					<input type="hidden" name="id" value="${information.id}">
-					<input type="hidden" name="loginId" value="${information.loginId}">
-					<input type="hidden" name="name" value="${information.name}">
-					<input type="hidden" name="branchId" value="${information.branchId}">
-					<input type="hidden" name="positionId" value="${information.positionId}">
 				</form>
 				<div class="change">
 					<form action="changeActivity" method="post" onSubmit="return checkSubmit()">
-						<c:if test="${information.activity == '活動中'}">
-							<input type="hidden" name="loginId" value="${information.id}">
-							<input type="hidden" name="change" value="1">
-							<input type="submit" value="停止する">
-							<script type="text/javascript">
-								 function checkSubmit() {
-									return confirm("変更してもいいですか？");
-									}
-							</script>
-						</c:if>
-						<c:if test="${information.activity == '停止中'}">
-							<input type="hidden" name="loginId" value="${information.id}">
-							<input type="hidden" name="change" value="0">
-							<input type="submit" value="活動する">
-							<script type="text/javascript">
-								 function checkSubmit() {
-									return confirm("変更してもいいですか？");
-								}
-							</script>
-						</c:if>
+						<c:choose>
+							<c:when test="${information.activity == 0}">
+								<input type="hidden" name="change" value="1">
+								<input type="submit" value="停止する">
+							</c:when>
+							<c:otherwise>
+								<input type="hidden" name="change" value="0">
+								<input type="submit" value="活動する">
+							</c:otherwise>
+						</c:choose>
+						<input type="hidden" name="loginId" value="${information.id}">
+						<script type="text/javascript">
+							 function checkSubmit() {
+								return confirm("変更してもいいですか？");
+							}
+						</script>
 					</form>
 				</div>
 			</c:forEach>

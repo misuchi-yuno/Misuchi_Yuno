@@ -14,7 +14,7 @@ public class UserInformation implements Serializable {
 	private String branchName;
 	private int positionId;
 	private String positionName;
-	private String activity;
+	private int activity;
 	private Date createdDate;
 	private Date updateDate;
 	public int getId() {
@@ -53,10 +53,10 @@ public class UserInformation implements Serializable {
 	public void setPositionId(int positionId) {
 		this.positionId = positionId;
 	}
-	public String getActivity() {
+	public int getActivity() {
 		return activity;
 	}
-	public void setActivity(String activity) {
+	public void setActivity(int activity) {
 		this.activity = activity;
 	}
 	public Date getCreatedDate() {
