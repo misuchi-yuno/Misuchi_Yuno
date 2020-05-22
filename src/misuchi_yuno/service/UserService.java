@@ -14,14 +14,14 @@ import misuchi_yuno.utils.CipherUtil;
 
 public class UserService {
 
-	public int count(User user) {
+	public int count(String loginId) {
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
 			UserDao userDao = new UserDao();
-			int count = userDao.getCount(connection, user);
+			int count = userDao.getCount(connection, loginId);
 
 			commit(connection);
 			return count;

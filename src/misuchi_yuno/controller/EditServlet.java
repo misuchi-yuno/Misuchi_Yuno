@@ -104,9 +104,9 @@ public class EditServlet extends HttpServlet {
 
 
 		if (!(password.length() == 0)) {
-			if (password.matches("[亜-熙ぁ-んァ-ヶ０-９ａ-ｚＡ-Ｚ]+$")) {
+			if (!password.matches("[ -~]*$")) {
 				messages.add("パスワードは記号を含む半角英数字6～20文字で入力してください");
-			} else if (!(password.length() >= 6 && password.length() <= 20)) {
+			} else if (password.length() < 6 || password.length() > 20) {
 				messages.add("パスワードを6～20文字で入力してください");
 			} else if (!password.equals(password2)) {
 				messages.add("パスワードと確認用パスワードがちがいます");
@@ -120,12 +120,10 @@ public class EditServlet extends HttpServlet {
 			messages.add("名前を10文字以下で入力してください");
 		}
 
-		User user = new User();
-		String OriginalLoginId = request.getParameter("originalLoginId");
-		user.setLoginId(request.getParameter("loginId"));
+		String originalLoginId = request.getParameter("originalLoginId");
 
-		if (!OriginalLoginId.equals(user.getLoginId())) {
-			int count = new UserService().count(user);
+		if (!originalLoginId.equals(loginId)) {
+			int count = new UserService().count(loginId);
 			if (count != 0) {
 				messages.add("ログインIDが使われています");
 			}

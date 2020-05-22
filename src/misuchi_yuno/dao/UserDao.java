@@ -17,7 +17,7 @@ import  misuchi_yuno.exception.SQLRuntimeException;
 public class UserDao {
 
 
-	public int getCount(Connection connection, User user) {
+	public int getCount(Connection connection, String loginId) {
 
 		PreparedStatement ps = null;
 		try {
@@ -25,7 +25,7 @@ public class UserDao {
 			sql.append("select count(*) from users where login_id = ?;");
 
 			ps = connection.prepareStatement(sql.toString());
-			ps.setString(1, user.getLoginId());
+			ps.setString(1, loginId);
 
 			ResultSet rs = ps.executeQuery();
 			int count = toCount(rs);
@@ -366,5 +366,4 @@ public class UserDao {
 			close(ps);
 		}
 	}
-
 }
