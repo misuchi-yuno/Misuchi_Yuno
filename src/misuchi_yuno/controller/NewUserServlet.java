@@ -70,7 +70,7 @@ public class NewUserServlet extends HttpServlet {
 
 		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
-		String password2= request.getParameter("password2");
+		String password2 = request.getParameter("password2");
 		String name = request.getParameter("name");
 
 		if (StringUtils.isEmpty(loginId))  {
