@@ -75,24 +75,20 @@ public class NewUserServlet extends HttpServlet {
 
 		if (StringUtils.isEmpty(loginId))  {
 			messages.add("ログインIDを入力してください");
-		} else {
-			if (!loginId.matches("[a-z A-Z 0-9]{6,20}")) {
+		} else if (!loginId.matches("[a-z A-Z 0-9]{6,20}")) {
 			messages.add("ログインIDを半角英数字6～20文字で入力してください");
-			}
 		}
 
 
 		if (StringUtils.isEmpty(password)) {
 			messages.add("パスワードを入力してください");
-		} else {
-			if (password.matches("[亜-熙ぁ-んァ-ヶ０-９ａ-ｚＡ-Ｚ]+$")) {
-				messages.add("パスワードは記号を含む半角英数字6～20文字で入力してください");
-			} else {
-				if (!(password.length() >= 6 && password.length() <= 20)) {
-					messages.add("パスワードを6～20文字で入力してください");
-				}
-			}
+		} else if (password.matches("[亜-熙ぁ-んァ-ヶ０-９ａ-ｚＡ-Ｚ]+$")) {
+			messages.add("パスワードは記号を含む半角英数字6～20文字で入力してください");
+		} else if (!(password.length() >= 6 && password.length() <= 20)) {
+			messages.add("パスワードを6～20文字で入力してください");
 		}
+
+
 
 		if (!password.equals(password2)) {
 			messages.add("パスワードと確認用パスワードがちがいます");
@@ -101,8 +97,7 @@ public class NewUserServlet extends HttpServlet {
 
 		if (StringUtils.isEmpty(name)) {
 			messages.add("名前を入力してください");
-		}
-		if (name.length() > 10) {
+		} else if (name.length() > 10) {
 			messages.add("名前を10文字以下で入力してください");
 		}
 
