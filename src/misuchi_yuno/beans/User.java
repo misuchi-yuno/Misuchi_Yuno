@@ -9,7 +9,9 @@ public class User {
 	private String password;
 	private String name;
 	private int branchId;
+	private String branchName;
 	private int positionId;
+	private String positionName;
 	private int activity;
 	private Timestamp createdDate;
 	private Timestamp updatedDate;
@@ -67,5 +69,17 @@ public class User {
 	}
 	public void setUpdatedDate(Timestamp updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+	public String getBranchName() {
+		return branchName;
+	}
+	public void setBranchName(String branchName) {
+		this.branchName = branchName;
+	}
+	public String getPositionName() {
+		return positionName;
+	}
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
 	}
 }

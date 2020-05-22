@@ -8,7 +8,6 @@ import java.util.List;
 
 import misuchi_yuno.beans.Activity;
 import misuchi_yuno.beans.User;
-import misuchi_yuno.beans.UserInformation;
 import misuchi_yuno.dao.UserDao;
 import misuchi_yuno.utils.CipherUtil;
 
@@ -62,13 +61,13 @@ public class UserService {
 		}
 	}
 
-	public List<UserInformation> getUsers() {
+	public List<User> getUsers() {
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
 			UserDao usersDao = new UserDao();
-			List<UserInformation> ret = usersDao.getUsers(connection);
+			List<User> ret = usersDao.getUsers(connection);
 
 			commit(connection);
 

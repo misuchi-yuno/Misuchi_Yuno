@@ -11,7 +11,6 @@ import java.util.List;
 
 import misuchi_yuno.beans.Activity;
 import misuchi_yuno.beans.User;
-import misuchi_yuno.beans.UserInformation;
 import misuchi_yuno.exception.NoRowsUpdatedRuntimeException;
 import  misuchi_yuno.exception.SQLRuntimeException;
 
@@ -90,7 +89,7 @@ public class UserDao {
 		}
 	}
 
-	public List<UserInformation> getBranches(Connection connection) {
+	public List<User> getBranches(Connection connection) {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
@@ -99,7 +98,7 @@ public class UserDao {
 			ps = connection.prepareStatement(sql.toString());
 
 			ResultSet rs = ps.executeQuery();
-			List<UserInformation> ret = toBranches(rs);
+			List<User> ret = toBranches(rs);
 			return ret;
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
@@ -108,16 +107,16 @@ public class UserDao {
 		}
 	}
 
-	private List<UserInformation> toBranches(ResultSet rs)
+	private List<User> toBranches(ResultSet rs)
 			throws SQLException {
 
-				List<UserInformation> ret = new ArrayList<UserInformation>();
+				List<User> ret = new ArrayList<User>();
 				try {
 					while (rs.next()) {
 						int id = rs.getInt("id");
 						String name = rs.getString("name");
 
-						UserInformation Branches = new UserInformation();
+						User Branches = new User();
 						Branches.setId(id);
 						Branches.setName(name);
 
@@ -130,7 +129,7 @@ public class UserDao {
 				}
 	}
 
-	public List<UserInformation> getPositions(Connection connection) {
+	public List<User> getPositions(Connection connection) {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
@@ -139,7 +138,7 @@ public class UserDao {
 			ps = connection.prepareStatement(sql.toString());
 
 			ResultSet rs = ps.executeQuery();
-			List<UserInformation> ret = toPositions(rs);
+			List<User> ret = toPositions(rs);
 			return ret;
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
@@ -148,16 +147,16 @@ public class UserDao {
 		}
 	}
 
-	private List<UserInformation> toPositions(ResultSet rs)
+	private List<User> toPositions(ResultSet rs)
 			throws SQLException {
 
-				List<UserInformation> ret = new ArrayList<UserInformation>();
+				List<User> ret = new ArrayList<User>();
 				try {
 					while (rs.next()) {
 						int id = rs.getInt("id");
 						String name = rs.getString("name");
 
-						UserInformation Positions = new UserInformation();
+						User Positions = new User();
 						Positions.setId(id);
 						Positions.setName(name);
 
@@ -170,7 +169,7 @@ public class UserDao {
 				}
 	}
 
-	public List<UserInformation> getUsers(Connection connection) {
+	public List<User> getUsers(Connection connection) {
 
 		PreparedStatement ps = null;
 		try {
@@ -193,7 +192,7 @@ public class UserDao {
 			ps = connection.prepareStatement(sql.toString());
 
 			ResultSet rs = ps.executeQuery();
-			List<UserInformation> ret = toUsersList(rs);
+			List<User> ret = toUsersList(rs);
 			return ret;
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
@@ -203,10 +202,10 @@ public class UserDao {
 
 	}
 
-	private List<UserInformation> toUsersList(ResultSet rs)
+	private List<User> toUsersList(ResultSet rs)
 		throws SQLException {
 
-			List<UserInformation> ret = new ArrayList<UserInformation>();
+			List<User> ret = new ArrayList<User>();
 			try {
 				while (rs.next()) {
 					int id = rs.getInt("id");
@@ -218,17 +217,17 @@ public class UserDao {
 					String positionName = rs.getString("position_name");
 					String activity = rs.getString("activity");
 
-					UserInformation information = new UserInformation();
-					information.setId(id);
-					information.setLoginId(loginId);
-					information.setName(name);
-					information.setBranchId(branchId);
-					information.setBranchName(branchName);
-					information.setPositionId(positionId);
-					information.setPositionName(positionName);
-					information.setActivity(Integer.valueOf(activity));
+					User user = new User();
+					user.setId(id);
+					user.setLoginId(loginId);
+					user.setName(name);
+					user.setBranchId(branchId);
+					user.setBranchName(branchName);
+					user.setPositionId(positionId);
+					user.setPositionName(positionName);
+					user.setActivity(Integer.valueOf(activity));
 
-					ret.add(information);
+					ret.add(user);
 
 				}
 				return ret;

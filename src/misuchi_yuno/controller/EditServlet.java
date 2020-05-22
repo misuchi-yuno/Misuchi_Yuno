@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 
 import misuchi_yuno.beans.User;
-import misuchi_yuno.beans.UserInformation;
 import misuchi_yuno.service.BranchService;
 import misuchi_yuno.service.PositionService;
 import misuchi_yuno.service.UserService;
@@ -27,8 +26,8 @@ public class EditServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		List<UserInformation> branch = new BranchService().getBranchList();
-		List<UserInformation> position = new PositionService().getPositionList();
+		List<User> branch = new BranchService().getBranchList();
+		List<User> position = new PositionService().getPositionList();
 
 		request.setAttribute("branches", branch);
 		request.setAttribute("positions", position);
@@ -71,8 +70,8 @@ public class EditServlet extends HttpServlet {
 		} else {
 			session.setAttribute("errorMessages", messages);
 
-			List<UserInformation> branch = new BranchService().getBranchList();
-			List<UserInformation> position = new PositionService().getPositionList();
+			List<User> branch = new BranchService().getBranchList();
+			List<User> position = new PositionService().getPositionList();
 
 			request.setAttribute("branches", branch);
 			request.setAttribute("positions", position);

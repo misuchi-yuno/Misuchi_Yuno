@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 
 import misuchi_yuno.beans.User;
-import misuchi_yuno.beans.UserInformation;
 import misuchi_yuno.service.BranchService;
 import misuchi_yuno.service.PositionService;
 import misuchi_yuno.service.UserService;
@@ -27,8 +26,8 @@ public class NewUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException , ServletException {
 
-		List<UserInformation> branch = new BranchService().getBranchList();
-		List<UserInformation> position = new PositionService().getPositionList();
+		List<User> branch = new BranchService().getBranchList();
+		List<User> position = new PositionService().getPositionList();
 
 		request.setAttribute("branches", branch);
 		request.setAttribute("positions", position);
@@ -39,37 +38,30 @@ public class NewUserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException , ServletException {
 
-
-
 		List<String> messages = new ArrayList<String>();
+
+		User user = new User();
+		user.setLoginId(request.getParameter("loginId"));
+		user.setPassword(request.getParameter("password"));
+		user.setName(request.getParameter("name"));
+		user.setBranchId(Integer.valueOf(request.getParameter("branchId")));
+		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 		HttpSession session = request.getSession();
 		if(isValid(request , messages) == true) {
-			User user = new User();
-			user.setLoginId(request.getParameter("loginId"));
-			user.setPassword(request.getParameter("password"));
-			user.setName(request.getParameter("name"));
-			user.setBranchId(Integer.valueOf(request.getParameter("branchId")));
-			user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 			new UserService().register(user);
 			response.sendRedirect("./");
 		} else {
 			session.setAttribute("errorMessages", messages);
 
-			List<UserInformation> branch = new BranchService().getBranchList();
-			List<UserInformation> position = new PositionService().getPositionList();
+			List<User> branch = new BranchService().getBranchList();
+			List<User> position = new PositionService().getPositionList();
 
 			request.setAttribute("branches", branch);
 			request.setAttribute("positions", position);
 
-			User errorUser = new User();
-			errorUser.setLoginId(request.getParameter("loginId"));
-			errorUser.setName(request.getParameter("name"));
-			errorUser.setBranchId(Integer.valueOf(request.getParameter("branchId")));
-			errorUser.setPositionId(Integer.valueOf(request.getParameter("positionId")));
-
-			request.setAttribute("errorUser", errorUser);
+			request.setAttribute("errorUser", user);
 
 			request.getRequestDispatcher("/newuser.jsp").forward(request, response);
 		}

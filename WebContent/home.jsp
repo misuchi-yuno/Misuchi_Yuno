@@ -18,15 +18,15 @@
 			<c:out value="${String}"></c:out>
 		</div>
 		<div class="informations">
-			<c:forEach items="${informations}" var="information">
+			<c:forEach items="${users}" var="user">
 				<form action="edit" method="get">
-					<br/><c:out value="${information.id}"></c:out>
-					<c:out value="${information.loginId}"></c:out>
-					<c:out value="${information.name}"></c:out>
-					<c:out value="${information.branchName}"></c:out>
-					<c:out value="${information.positionName}"></c:out>
+					<br/><c:out value="${user.id}"></c:out>
+					<c:out value="${user.loginId}"></c:out>
+					<c:out value="${user.name}"></c:out>
+					<c:out value="${user.branchName}"></c:out>
+					<c:out value="${user.positionName}"></c:out>
 					<c:choose>
-						<c:when test="${information.activity == 0}">
+						<c:when test="${user.activity == 0}">
 							<c:out value="活動中"></c:out>
 						</c:when>
 						<c:otherwise>
@@ -34,12 +34,12 @@
 						</c:otherwise>
 					</c:choose>
 					<input type="submit" value="編集">
-					<input type="hidden" name="id" value="${information.id}">
+					<input type="hidden" name="id" value="${user.id}">
 				</form>
 				<div class="change">
 					<form action="changeActivity" method="post" onSubmit="return checkSubmit()">
 						<c:choose>
-							<c:when test="${information.activity == 0}">
+							<c:when test="${user.activity == 0}">
 								<input type="hidden" name="change" value="1">
 								<input type="submit" value="停止する">
 							</c:when>
@@ -48,7 +48,7 @@
 								<input type="submit" value="活動する">
 							</c:otherwise>
 						</c:choose>
-						<input type="hidden" name="loginId" value="${information.id}">
+						<input type="hidden" name="loginId" value="${user.id}">
 						<script type="text/javascript">
 							 function checkSubmit() {
 								return confirm("変更してもいいですか？");
