@@ -103,15 +103,14 @@ public class EditServlet extends HttpServlet {
 		}
 
 
-		if (!(password.length() == 0)) {
-			if (!password.matches("[ -~]*$")) {
-				messages.add("パスワードは記号を含む半角英数字6～20文字で入力してください");
-			} else if (password.length() < 6 || password.length() > 20) {
-				messages.add("パスワードを6～20文字で入力してください");
-			} else if (!password.equals(password2)) {
-				messages.add("パスワードと確認用パスワードがちがいます");
-			}
+		if (!password.matches("[ -~]*$")) {
+			messages.add("パスワードは記号を含む半角英数字6～20文字で入力してください");
+		} else if (password.length() > 0 && password.length() < 6 || password.length() > 20) {
+			messages.add("パスワードを6～20文字で入力してください");
+		} else if (!password.equals(password2)) {
+			messages.add("パスワードと確認用パスワードがちがいます");
 		}
+
 
 
 		if (StringUtils.isEmpty(name)) {
