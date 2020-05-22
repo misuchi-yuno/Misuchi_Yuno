@@ -62,13 +62,13 @@ public class UserService {
 		}
 	}
 
-	public List<UserInformation> getInformation() {
+	public List<UserInformation> getUsers() {
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
-			UserDao InformationDao = new UserDao();
-			List<UserInformation> ret = InformationDao.getUserInformation(connection);
+			UserDao usersDao = new UserDao();
+			List<UserInformation> ret = usersDao.getUsers(connection);
 
 			commit(connection);
 
@@ -85,17 +85,17 @@ public class UserService {
 
 	}
 
-	public User getThisUserInformation(User user) {
+	public User getThisUser(String id) {
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
-			UserDao ThisInformationDao = new UserDao();
-			User ThisUser = ThisInformationDao.getThisUserInformation(connection, user);
+			UserDao thisUserDao = new UserDao();
+			User thisUser = thisUserDao.getThisUser(connection, id);
 
 			commit(connection);
 
-			return ThisUser;
+			return thisUser;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;

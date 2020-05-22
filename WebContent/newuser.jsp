@@ -21,20 +21,34 @@
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
 		<form action="newuser" method="post">
-			<label for="login_id">ログインID：</label> <input type="text" name="loginId" id="login_id" ><br/>
+			<label for="login_id">ログインID：</label> <input type="text" name="loginId" id="login_id" value="${errorUser.loginId}"><br/>
 			<label for="password">パスワード：</label> <input type="password" name="password" id="password" >
 			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2"><br/>
-			<label for="name">名前：</label> <input name="name" id="name" ><br/>
+			<label for="name">名前：</label> <input name="name" id="name" value="${errorUser.name}"><br/>
 			<label>支店：</label>
 			<select name="branchId">
 				<c:forEach items="${branches}" var="branch">
-					<option value="${branch.id}">${branch.name}</option>
+					<c:choose>
+						<c:when test="${branch.id == errorUser.branchId}">
+							<option value="${branch.id}" selected>${branch.name}</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${branch.id}">${branch.name}</option>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 			</select>
 			<label>部署・役職</label>
 			<select name="positionId">
 				<c:forEach items="${positions}" var="position">
-					<option value="${position.id}">${position.name}</option>
+					<c:choose>
+						<c:when test="${position.id == error.positionId}">
+							<option value="${position.id}" selected>${position.name}</option>
+						</c:when>
+						<c:otherwise>
+							<option value="${position.id}">${position.name}</option>
+						</c:otherwise>
+					</c:choose>
 				</c:forEach>
 			</select>
 			<input type="submit" value="登録">

@@ -27,17 +27,17 @@
 		</c:if>
 
 		<form action="edit" method="post">
-			<input type="hidden" name="id" id="id" value="${userInformation.id}">
-			<input type="hidden" name="originalLoginId" value="${userInformation.loginId}" >
-			<label for="login_id">ログインID：</label> <input type="text" name="loginId" id="login_id" value=${userInformation.loginId } ><br/>
+			<input type="hidden" name="id" id="id" value="${thisUser.id}">
+			<input type="hidden" name="originalLoginId" value="${thisUser.loginId}" >
+			<label for="login_id">ログインID：</label> <input type="text" name="loginId" id="login_id" value=${thisUser.loginId } ><br/>
 			<label for="password">パスワード：</label> <input type="password" name="password" id="password" >
 			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2"><br/>
-			<label for="name">名前：</label> <input name="name" id="name" value="${userInformation.name}"><br/>
+			<label for="name">名前：</label> <input name="name" id="name" value="${thisUser.name}"><br/>
 			<label>支店：</label>
 			<select name="branchId">
 				<c:forEach items="${branches}" var="branch">
 					<c:choose>
-						<c:when test="${branch.id == userInformation.branchId}">
+						<c:when test="${branch.id == thisUser.branchId}">
 							<option value="${branch.id}" selected>${branch.name}</option>
 						</c:when>
 						<c:otherwise>
@@ -50,7 +50,7 @@
 			<select name="positionId">
 				<c:forEach items="${positions}" var="position">
 					<c:choose>
-						<c:when test="${position.id == userInformation.positionId}">
+						<c:when test="${position.id == thisUser.positionId}">
 							<option value="${position.id}" selected>${position.name}</option>
 						</c:when>
 						<c:otherwise>

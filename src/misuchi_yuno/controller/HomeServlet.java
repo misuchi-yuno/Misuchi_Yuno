@@ -20,7 +20,7 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-		List<UserInformation> informations = new UserService().getInformation();
+		List<UserInformation> informations = new UserService().getUsers();
 
 		request.setAttribute("informations", informations);
 

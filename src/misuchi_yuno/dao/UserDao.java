@@ -170,7 +170,7 @@ public class UserDao {
 				}
 	}
 
-	public List<UserInformation> getUserInformation(Connection connection) {
+	public List<UserInformation> getUsers(Connection connection) {
 
 		PreparedStatement ps = null;
 		try {
@@ -193,7 +193,7 @@ public class UserDao {
 			ps = connection.prepareStatement(sql.toString());
 
 			ResultSet rs = ps.executeQuery();
-			List<UserInformation> ret = toUserInformationList(rs);
+			List<UserInformation> ret = toUsersList(rs);
 			return ret;
 		} catch (SQLException e) {
 			throw new SQLRuntimeException(e);
@@ -203,7 +203,7 @@ public class UserDao {
 
 	}
 
-	private List<UserInformation> toUserInformationList(ResultSet rs)
+	private List<UserInformation> toUsersList(ResultSet rs)
 		throws SQLException {
 
 			List<UserInformation> ret = new ArrayList<UserInformation>();
@@ -237,7 +237,7 @@ public class UserDao {
 			}
 		}
 
-	public User getThisUserInformation(Connection connection, User user) {
+	public User getThisUser(Connection connection, String id) {
 
 		PreparedStatement ps = null;
 		try {
@@ -254,12 +254,12 @@ public class UserDao {
 			sql.append(";");
 
 			ps = connection.prepareStatement(sql.toString());
-			ps.setString(1, Integer.toString(user.getId()));
+			ps.setString(1, id);
 
 			ResultSet rs = ps.executeQuery();
 
 			User user2 = new User();
-			user2 = toThisUserInformationList(rs);
+			user2 = toThisUserList(rs);
 
 			return user2;
 		} catch (SQLException e) {
@@ -270,7 +270,7 @@ public class UserDao {
 
 	}
 
-	private User toThisUserInformationList(ResultSet rs)
+	private User toThisUserList(ResultSet rs)
 		throws SQLException {
 
 		User user = new User();

@@ -56,7 +56,22 @@ public class NewUserServlet extends HttpServlet {
 			response.sendRedirect("./");
 		} else {
 			session.setAttribute("errorMessages", messages);
-			response.sendRedirect("newuser");
+
+			List<UserInformation> branch = new BranchService().getBranchList();
+			List<UserInformation> position = new PositionService().getPositionList();
+
+			request.setAttribute("branches", branch);
+			request.setAttribute("positions", position);
+
+			User errorUser = new User();
+			errorUser.setLoginId(request.getParameter("loginId"));
+			errorUser.setName(request.getParameter("name"));
+			errorUser.setBranchId(Integer.valueOf(request.getParameter("branchId")));
+			errorUser.setPositionId(Integer.valueOf(request.getParameter("positionId")));
+
+			request.setAttribute("errorUser", errorUser);
+
+			request.getRequestDispatcher("/newuser.jsp").forward(request, response);
 		}
 	}
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
@@ -65,14 +80,11 @@ public class NewUserServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String password2= request.getParameter("password2");
 		String name = request.getParameter("name");
-		String branchId = request.getParameter("branchId");
-		String positionId = request.getParameter("positionId");
 
 		if (StringUtils.isEmpty(loginId))  {
 			messages.add("ログインIDを入力してください");
 		}
-		if (loginId.matches("[a-z A-Z 0-9]{6,20}")) {
-		} else {
+		if (!loginId.matches("[a-z A-Z 0-9]{6,20}")) {
 			messages.add("ログインIDを半角英数字6～20文字で入力してください");
 		}
 
@@ -83,7 +95,7 @@ public class NewUserServlet extends HttpServlet {
 		if (password.matches("[亜-熙ぁ-んァ-ヶ０-９ａ-ｚＡ-Ｚ]+$")) {
 			messages.add("パスワードは記号を含む半角英数字6～20文字で入力してください");
 		} else {
-			if (password.length() > 20 || password.length() < 6) {
+			if (!(password.length() >= 6 && password.length() <= 20)) {
 				messages.add("パスワードを6～20文字で入力してください");
 			}
 		}
@@ -99,23 +111,6 @@ public class NewUserServlet extends HttpServlet {
 		if (name.length() > 10) {
 			messages.add("名前を10文字以下で入力してください");
 		}
-
-
-		if (StringUtils.isEmpty(branchId)) {
-			messages.add("支店コードを入力してください");
-		}
-		if (branchId.matches("^[0*9]+$")) {
-			messages.add("支店コードの数字を入力してください");
-		}
-
-
-		if (StringUtils.isEmpty(positionId)) {
-			messages.add("部署・役職コードを入力してください");
-		}
-		if (positionId.matches("^[0*9]+$")) {
-			messages.add("部署・役職コードの数字を入力してください");
-		}
-
 
 		User user = new User();
 		user.setLoginId(request.getParameter("loginId"));
