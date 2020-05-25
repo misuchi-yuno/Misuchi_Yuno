@@ -121,7 +121,6 @@ public class UserDao {
 						Branches.setName(name);
 
 						ret.add(Branches);
-
 					}
 					return ret;
 				} finally {
@@ -156,11 +155,11 @@ public class UserDao {
 						int id = rs.getInt("id");
 						String name = rs.getString("name");
 
-						User Positions = new User();
-						Positions.setId(id);
-						Positions.setName(name);
+						User positions = new User();
+						positions.setId(id);
+						positions.setName(name);
 
-						ret.add(Positions);
+						ret.add(positions);
 
 					}
 					return ret;
@@ -228,7 +227,6 @@ public class UserDao {
 					user.setActivity(Integer.valueOf(activity));
 
 					ret.add(user);
-
 				}
 				return ret;
 			} finally {
@@ -236,7 +234,7 @@ public class UserDao {
 			}
 		}
 
-	public User getThisUser(Connection connection, String id) {
+	public User getEditUser(Connection connection, String id) {
 
 		PreparedStatement ps = null;
 		try {
@@ -258,7 +256,7 @@ public class UserDao {
 			ResultSet rs = ps.executeQuery();
 
 			User user2 = new User();
-			user2 = toThisUserList(rs);
+			user2 = toEditUserList(rs);
 
 			return user2;
 		} catch (SQLException e) {
@@ -269,7 +267,7 @@ public class UserDao {
 
 	}
 
-	private User toThisUserList(ResultSet rs)
+	private User toEditUserList(ResultSet rs)
 		throws SQLException {
 
 		User user = new User();

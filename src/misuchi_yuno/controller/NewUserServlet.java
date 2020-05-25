@@ -48,7 +48,7 @@ public class NewUserServlet extends HttpServlet {
 		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 		HttpSession session = request.getSession();
-		if(isValid(request , messages) == true) {
+		if(isValid(request, messages) == true) {
 
 			new UserService().register(user);
 			response.sendRedirect("./");
@@ -60,7 +60,6 @@ public class NewUserServlet extends HttpServlet {
 
 			request.setAttribute("branches", branch);
 			request.setAttribute("positions", position);
-
 			request.setAttribute("errorUser", user);
 
 			request.getRequestDispatcher("/newuser.jsp").forward(request, response);
@@ -101,7 +100,6 @@ public class NewUserServlet extends HttpServlet {
 		if (count != 0) {
 			messages.add("ログインIDが使われています");
 		}
-
 		return messages.size() == 0;
 	}
 }

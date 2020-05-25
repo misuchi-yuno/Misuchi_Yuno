@@ -20,8 +20,7 @@ public class UserService {
 		try {
 			connection = getConnection();
 
-			UserDao userDao = new UserDao();
-			int count = userDao.getCount(connection, loginId);
+			int count = new UserDao().getCount(connection, loginId);
 
 			commit(connection);
 			return count;
@@ -46,8 +45,7 @@ public class UserService {
 			String encPassword = CipherUtil.encrypt(user.getPassword());
 			user.setPassword(encPassword);
 
-			UserDao userDao = new UserDao();
-			userDao.insert(connection, user);
+			new UserDao().insert(connection, user);
 
 			commit(connection);
 		} catch (RuntimeException e) {
@@ -66,8 +64,7 @@ public class UserService {
 		try {
 			connection = getConnection();
 
-			UserDao usersDao = new UserDao();
-			List<User> ret = usersDao.getUsers(connection);
+			List<User> ret = new UserDao().getUsers(connection);
 
 			commit(connection);
 
@@ -84,17 +81,16 @@ public class UserService {
 
 	}
 
-	public User getThisUser(String id) {
+	public User getEditUser(String id) {
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
-			UserDao thisUserDao = new UserDao();
-			User thisUser = thisUserDao.getThisUser(connection, id);
+			User user = new UserDao().getEditUser(connection, id);
 
 			commit(connection);
 
-			return thisUser;
+			return user;
 		} catch (RuntimeException e) {
 			rollback(connection);
 			throw e;
@@ -116,8 +112,7 @@ public class UserService {
 			String encPassword = CipherUtil.encrypt(user.getPassword());
 			user.setPassword(encPassword);
 
-			UserDao userDao = new UserDao();
-			userDao.update(connection, user);
+			new UserDao().update(connection, user);
 
 			commit(connection);
 		} catch (RuntimeException e) {
@@ -137,8 +132,7 @@ public class UserService {
 		try {
 			connection = getConnection();
 
-			UserDao activityDao = new UserDao();
-			activityDao.activityUpdate(connection, activity);
+			new UserDao().activityUpdate(connection, activity);
 
 			commit(connection);
 		} catch (RuntimeException e) {

@@ -21,7 +21,7 @@
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
 		<form action="newuser" method="post">
-			<label for="login_id">ログインID：</label> <input type="text" name="loginId" id="login_id" value="${errorUser.loginId}"><br/>
+			<label for="loginId">ログインID：</label> <input type="text" name="loginId" id="loginId" value="${errorUser.loginId}"><br/>
 			<label for="password">パスワード：</label> <input type="password" name="password" id="password" >
 			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2"><br/>
 			<label for="name">名前：</label> <input name="name" id="name" value="${errorUser.name}"><br/>

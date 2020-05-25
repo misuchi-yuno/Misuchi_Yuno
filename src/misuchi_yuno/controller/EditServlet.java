@@ -35,9 +35,8 @@ public class EditServlet extends HttpServlet {
 		String id = request.getParameter("id");
 		request.setAttribute("id", id);
 
-		UserService thisUser = new UserService();
-		User user = thisUser.getThisUser(id);
-		request.setAttribute("thisUser",  user);
+		User user = new UserService().getEditUser(id);
+		request.setAttribute("editUser", user);
 
 		request.getRequestDispatcher("/edit.jsp").forward(request, response);
 	}
@@ -59,7 +58,7 @@ public class EditServlet extends HttpServlet {
 		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 		HttpSession session = request.getSession();
-		if(isValid(request , messages) == true) {
+		if(isValid(request, messages) == true) {
 
 			new UserService().editRegister(user);
 			response.sendRedirect("./");
@@ -75,23 +74,17 @@ public class EditServlet extends HttpServlet {
 
 			String id = request.getParameter("id");
 			request.setAttribute("id", id);
-
-			User errorUser =new User();
-			errorUser.setId(Integer.valueOf(request.getParameter("id")));
-			errorUser.setLoginId(request.getParameter("loginId"));
-			errorUser.setName(request.getParameter("name"));
-			errorUser.setBranchId(Integer.valueOf(request.getParameter("branchId")));
-			errorUser.setPositionId(Integer.valueOf(request.getParameter("positionId")));
-
-			request.setAttribute("thisUser",  errorUser);
+			request.setAttribute("editUser", user);
 			request.getRequestDispatcher("edit.jsp").forward(request, response);
 		}
 	}
+
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 
+		String id = request.getParameter("id");
 		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
-		String password2= request.getParameter("password2");
+		String password2 = request.getParameter("password2");
 		String name = request.getParameter("name");
 
 		if (StringUtils.isEmpty(loginId))  {
@@ -118,22 +111,14 @@ public class EditServlet extends HttpServlet {
 			messages.add("名前を10文字以下で入力してください");
 		}
 
-		String originalLoginId = request.getParameter("originalLoginId");
-
-		if (!originalLoginId.equals(loginId)) {
+		User user = new UserService().getEditUser(id);
+		if (!user.getLoginId().equals(loginId)) {
 			int count = new UserService().count(loginId);
 			if (count != 0) {
 				messages.add("ログインIDが使われています");
 			}
 		}
-
-
-
-		if (messages.size() == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return messages.size() == 0;
 	}
 }
 
