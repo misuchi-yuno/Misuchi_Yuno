@@ -17,7 +17,7 @@ public class ChangeActivity  extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException , ServletException {
+			throws IOException, ServletException {
 
 		Activity activity = new Activity();
 		activity.setLoginId(request.getParameter("loginId"));

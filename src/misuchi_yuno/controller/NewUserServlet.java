@@ -24,7 +24,7 @@ public class NewUserServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws IOException , ServletException {
+			throws IOException, ServletException {
 
 		List<User> branch = new BranchService().getBranchList();
 		List<User> position = new PositionService().getPositionList();
@@ -36,7 +36,7 @@ public class NewUserServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException , ServletException {
+			throws IOException, ServletException {
 
 		List<String> messages = new ArrayList<String>();
 

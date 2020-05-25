@@ -28,7 +28,6 @@
 
 		<form action="edit" method="post">
 			<input type="hidden" name="id" id="id" value="${editUser.id}">
-			<input type="hidden" name="originalLoginId" value="${editUser.loginId}" >
 			<label for="loginId">ログインID：</label> <input type="text" name="loginId" id="loginId" value=${editUser.loginId } ><br/>
 			<label for="password">パスワード：</label> <input type="password" name="password" id="password" >
 			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2"><br/>

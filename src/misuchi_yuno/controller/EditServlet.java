@@ -45,7 +45,7 @@ public class EditServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws IOException , ServletException {
+			throws IOException, ServletException {
 
 		List<String> messages = new ArrayList<String>();
 
@@ -91,7 +91,6 @@ public class EditServlet extends HttpServlet {
 			messages.add("ログインIDを入力してください");
 		} else if (!loginId.matches("[a-z A-Z 0-9]{6,20}")) {
 			messages.add("ログインIDを半角英数字6～20文字で入力してください");
-
 		}
 
 
