@@ -32,15 +32,12 @@ public class EditServlet extends HttpServlet {
 		request.setAttribute("branches", branch);
 		request.setAttribute("positions", position);
 
-
-		User user = new User();
-		user.setId(Integer.valueOf(request.getParameter("id")));
 		String id = request.getParameter("id");
 		request.setAttribute("id", id);
 
-		UserService ThisUser = new UserService();
-		User thisUser = ThisUser.getThisUser(id);
-		request.setAttribute("thisUser",  thisUser);
+		UserService thisUser = new UserService();
+		User user = thisUser.getThisUser(id);
+		request.setAttribute("thisUser",  user);
 
 		request.getRequestDispatcher("/edit.jsp").forward(request, response);
 	}
@@ -53,20 +50,20 @@ public class EditServlet extends HttpServlet {
 
 		List<String> messages = new ArrayList<String>();
 
+		User user = new User();
+		user.setId(Integer.valueOf(request.getParameter("id")));
+		user.setLoginId(request.getParameter("loginId"));
+		user.setPassword(request.getParameter("password"));
+		user.setName(request.getParameter("name"));
+		user.setBranchId(Integer.valueOf(request.getParameter("branchId")));
+		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
+
 		HttpSession session = request.getSession();
 		if(isValid(request , messages) == true) {
 
-			User user = new User();
-			user.setId(Integer.valueOf(request.getParameter("id")));
-			user.setLoginId(request.getParameter("loginId"));
-			user.setPassword(request.getParameter("password"));
-			user.setName(request.getParameter("name"));
-			user.setBranchId(Integer.valueOf(request.getParameter("branchId")));
-			user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
-
 			new UserService().editRegister(user);
-
 			response.sendRedirect("./");
+
 		} else {
 			session.setAttribute("errorMessages", messages);
 
@@ -76,15 +73,17 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("branches", branch);
 			request.setAttribute("positions", position);
 
-
-			User user = new User();
-			user.setId(Integer.valueOf(request.getParameter("id")));
 			String id = request.getParameter("id");
 			request.setAttribute("id", id);
 
-			UserService ThisUser = new UserService();
-			User thisUser = ThisUser.getThisUser(id);
-			request.setAttribute("thisUser",  thisUser);
+			User errorUser =new User();
+			errorUser.setId(Integer.valueOf(request.getParameter("id")));
+			errorUser.setLoginId(request.getParameter("loginId"));
+			errorUser.setName(request.getParameter("name"));
+			errorUser.setBranchId(Integer.valueOf(request.getParameter("branchId")));
+			errorUser.setPositionId(Integer.valueOf(request.getParameter("positionId")));
+
+			request.setAttribute("thisUser",  errorUser);
 			request.getRequestDispatcher("edit.jsp").forward(request, response);
 		}
 	}
