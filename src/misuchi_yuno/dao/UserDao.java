@@ -22,7 +22,9 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder ();
-			sql.append("select count(*) from users where login_id = ?;");
+			sql.append("SELECT COUNT(*) ");
+			sql.append("FROM users ");
+			sql.append("WHERE login_id = ?;");
 
 			ps = connection.prepareStatement(sql.toString());
 			ps.setString(1, loginId);
@@ -93,7 +95,8 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("select * from branches;");
+			sql.append("SELECT * ");
+			sql.append("FROM branches;");
 
 			ps = connection.prepareStatement(sql.toString());
 
@@ -132,7 +135,8 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("select * from positions;");
+			sql.append("SELECT * ");
+			sql.append("FROM positions;");
 
 			ps = connection.prepareStatement(sql.toString());
 
@@ -174,19 +178,19 @@ public class UserDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT ");
-			sql.append("users.id, ");
-			sql.append("users.login_id, ");
-			sql.append("users.name, ");
-			sql.append("users.branch_id, ");
-			sql.append("branches.name as branch_name, ");
-			sql.append("users.position_id, ");
-			sql.append("positions.name as position_name, ");
-			sql.append("users.activity ");
-			sql.append("from users ");
-			sql.append("inner join branches ");
-			sql.append("on users.branch_id = branches.branch_id ");
-			sql.append("inner join positions ");
-			sql.append("on users.position_id = positions.position_id;");
+			sql.append("users.id");
+			sql.append(", users.login_id");
+			sql.append(", users.name");
+			sql.append(", users.branch_id");
+			sql.append(", branches.name AS branch_name");
+			sql.append(", users.position_id");
+			sql.append(", positions.name AS position_name");
+			sql.append(", users.activity ");
+			sql.append("FROM users ");
+			sql.append("INNER JOIN branches ");
+			sql.append("ON users.branch_id = branches.branch_id ");
+			sql.append("INNER JOIN positions ");
+			sql.append("ON users.position_id = positions.position_id;");
 
 			ps = connection.prepareStatement(sql.toString());
 
@@ -240,13 +244,13 @@ public class UserDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT ");
-			sql.append("id, ");
-			sql.append("login_id, ");
-			sql.append("name, ");
-			sql.append("branch_id, ");
-			sql.append("position_id ");
-			sql.append("from users ");
-			sql.append("where id = ");
+			sql.append("id");
+			sql.append(", login_id");
+			sql.append(", name");
+			sql.append(", branch_id");
+			sql.append(", position_id ");
+			sql.append("FROM users ");
+			sql.append("WHERE id = ");
 			sql.append("?");
 			sql.append(";");
 
@@ -300,7 +304,7 @@ public class UserDao {
 				sql.append(", name = ? ");
 				sql.append(", branch_id = ? ");
 				sql.append(", position_id = ? ");
-				sql.append("where id = ? ");
+				sql.append("WHERE id = ? ");
 
 				ps = connection.prepareStatement(sql.toString());
 
@@ -310,13 +314,12 @@ public class UserDao {
 				ps.setInt(4, user.getPositionId());
 				ps.setInt(5, user.getId());
 			} else {
-				sql.append("login_id = ");
-				sql.append("?, password = ");
-				sql.append("?, name = ");
-				sql.append("?, branch_id = ");
-				sql.append("?, position_id = ");
-				sql.append("? where id = ");
-				sql.append("?;");
+				sql.append("login_id = ?");
+				sql.append(", password = ?");
+				sql.append(", name = ?");
+				sql.append(", branch_id = ?");
+				sql.append(", position_id = ?");
+				sql.append(" where id = ?;");
 
 
 				ps = connection.prepareStatement(sql.toString());
@@ -344,10 +347,8 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("update users set activity = ");
-			sql.append("? where id = ");
-			sql.append("? ");
-			sql.append(";");
+			sql.append("update users set activity = ? ");
+			sql.append("WHERE id = ?;");
 
 			ps = connection.prepareStatement(sql.toString());
 
