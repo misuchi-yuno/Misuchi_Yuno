@@ -300,34 +300,27 @@ public class UserDao {
 		try {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE users SET ");
-
 			sql.append("login_id = ?");
-			if (!StringUtils.isEmpty(user.getPassword())) {
-				sql.append(", password = ?");
-			}
 			sql.append(", name = ?");
 			sql.append(", branch_id = ?");
 			sql.append(", position_id = ?");
+			if (!StringUtils.isEmpty(user.getPassword())) {
+				sql.append(", password = ?");
+			}
 			sql.append(" WHERE id = ?;");
 
 			ps = connection.prepareStatement(sql.toString());
 
 			ps.setString(1, user.getLoginId());
+			ps.setString(2, user.getName());
+			ps.setInt(3, user.getBranchId());
+			ps.setInt(4, user.getPositionId());
 			if (!StringUtils.isEmpty(user.getPassword())) {
-				ps.setString(2, user.getPassword());
-				ps.setString(3, user.getName());
-				ps.setInt(4, user.getBranchId());
-				ps.setInt(5, user.getPositionId());
+				ps.setString(5, user.getPassword());
 				ps.setInt(6, user.getId());
 			} else {
-				ps.setString(2, user.getName());
-				ps.setInt(3, user.getBranchId());
-				ps.setInt(4, user.getPositionId());
 				ps.setInt(5, user.getId());
 			}
-
-
-
 
 			int count = ps.executeUpdate();
 			if (count == 0) {
