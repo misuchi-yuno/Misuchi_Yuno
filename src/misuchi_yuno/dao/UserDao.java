@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import misuchi_yuno.beans.Activity;
 import misuchi_yuno.beans.User;
 import misuchi_yuno.exception.NoRowsUpdatedRuntimeException;
@@ -299,7 +301,7 @@ public class UserDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE users SET ");
 
-			if(user.getPassword().equals("47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU")) {
+			if(StringUtils.isEmpty(user.getPassword())) {
 				sql.append("login_id = ? ");
 				sql.append(", name = ? ");
 				sql.append(", branch_id = ? ");
