@@ -301,38 +301,32 @@ public class UserDao {
 			StringBuilder sql = new StringBuilder();
 			sql.append("UPDATE users SET ");
 
-			if(StringUtils.isEmpty(user.getPassword())) {
-				sql.append("login_id = ? ");
-				sql.append(", name = ? ");
-				sql.append(", branch_id = ? ");
-				sql.append(", position_id = ? ");
-				sql.append("WHERE id = ? ");
-
-				ps = connection.prepareStatement(sql.toString());
-
-				ps.setString(1, user.getLoginId());
-				ps.setString(2, user.getName());
-				ps.setInt(3, user.getBranchId());
-				ps.setInt(4, user.getPositionId());
-				ps.setInt(5, user.getId());
-			} else {
-				sql.append("login_id = ?");
+			sql.append("login_id = ?");
+			if (!StringUtils.isEmpty(user.getPassword())) {
 				sql.append(", password = ?");
-				sql.append(", name = ?");
-				sql.append(", branch_id = ?");
-				sql.append(", position_id = ?");
-				sql.append(" WHERE id = ?;");
+			}
+			sql.append(", name = ?");
+			sql.append(", branch_id = ?");
+			sql.append(", position_id = ?");
+			sql.append(" WHERE id = ?;");
 
+			ps = connection.prepareStatement(sql.toString());
 
-				ps = connection.prepareStatement(sql.toString());
-
-				ps.setString(1, user.getLoginId());
+			ps.setString(1, user.getLoginId());
+			if (!StringUtils.isEmpty(user.getPassword())) {
 				ps.setString(2, user.getPassword());
 				ps.setString(3, user.getName());
 				ps.setInt(4, user.getBranchId());
 				ps.setInt(5, user.getPositionId());
 				ps.setInt(6, user.getId());
+			} else {
+				ps.setString(2, user.getName());
+				ps.setInt(3, user.getBranchId());
+				ps.setInt(4, user.getPositionId());
+				ps.setInt(5, user.getId());
 			}
+
+
 
 
 			int count = ps.executeUpdate();
