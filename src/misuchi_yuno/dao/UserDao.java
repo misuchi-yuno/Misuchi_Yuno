@@ -297,9 +297,9 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("update users set ");
+			sql.append("UPDATE users SET ");
 
-			if(user.getPassword().equals("")) {
+			if(user.getPassword().equals("47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU")) {
 				sql.append("login_id = ? ");
 				sql.append(", name = ? ");
 				sql.append(", branch_id = ? ");
@@ -319,7 +319,7 @@ public class UserDao {
 				sql.append(", name = ?");
 				sql.append(", branch_id = ?");
 				sql.append(", position_id = ?");
-				sql.append(" where id = ?;");
+				sql.append(" WHERE id = ?;");
 
 
 				ps = connection.prepareStatement(sql.toString());
@@ -331,6 +331,7 @@ public class UserDao {
 				ps.setInt(5, user.getPositionId());
 				ps.setInt(6, user.getId());
 			}
+
 
 			int count = ps.executeUpdate();
 			if (count == 0) {
@@ -347,7 +348,7 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("update users set activity = ? ");
+			sql.append("UPDATE users SET activity = ? ");
 			sql.append("WHERE id = ?;");
 
 			ps = connection.prepareStatement(sql.toString());
