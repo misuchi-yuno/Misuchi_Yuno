@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.lang.StringUtils;
 
 import misuchi_yuno.beans.User;
+import misuchi_yuno.exception.NoRowsUpdatedRuntimeException;
 import misuchi_yuno.service.BranchService;
 import misuchi_yuno.service.PositionService;
 import misuchi_yuno.service.UserService;
@@ -59,8 +60,18 @@ public class EditServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if(isValid(request, messages) == true) {
 
-			new UserService().editRegister(user);
-			response.sendRedirect("./");
+			try {
+				new UserService().editRegister(user);
+			} catch (NoRowsUpdatedRuntimeException e) {
+				messages.add("他の人によって更新されています。最新のデータを表示しました。データを確認してください。");
+				session.setAttribute("errorMessages", messages);
+				request.setAttribute("branches", branch);
+				request.setAttribute("positions", position);
+				request.setAttribute("editUser", user);
+				request.getRequestDispatcher("edit.jsp").forward(request, response);
+				return;
+			}
+				response.sendRedirect("./");
 
 		} else {
 			session.setAttribute("errorMessages", messages);
