@@ -304,6 +304,7 @@ public class UserDao {
 			sql.append(", name = ?");
 			sql.append(", branch_id = ?");
 			sql.append(", position_id = ?");
+			sql.append(", updated_date = CURRENT_TIMESTAMP");
 			if (!StringUtils.isEmpty(user.getPassword())) {
 				sql.append(", password = ?");
 			}
@@ -337,7 +338,8 @@ public class UserDao {
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
-			sql.append("UPDATE users SET activity = ? ");
+			sql.append("UPDATE users SET activity = ?");
+			sql.append(", updated_date = CURRENT_TIMESTAMP ");
 			sql.append("WHERE id = ?;");
 
 			ps = connection.prepareStatement(sql.toString());
