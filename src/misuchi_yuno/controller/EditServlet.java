@@ -118,12 +118,15 @@ public class EditServlet extends HttpServlet {
 		}
 
 		User user = new UserService().getEditUser(id);
-		if (!user.getLoginId().equals(loginId)) {
-			int count = new UserService().count(loginId);
-			if (count != 0) {
-				messages.add("ログインIDが使われています");
+		if (user.getLoginId() != null) {
+			if (!user.getLoginId().equals(loginId)) {
+				int count = new UserService().count(loginId);
+				if (count != 0) {
+					messages.add("ログインIDが使われています");
+				}
 			}
 		}
+
 		return messages.size() == 0;
 	}
 }
