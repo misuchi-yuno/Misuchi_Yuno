@@ -32,10 +32,7 @@ public class EditServlet extends HttpServlet {
 		request.setAttribute("branches", branch);
 		request.setAttribute("positions", position);
 
-		String id = request.getParameter("id");
-		request.setAttribute("id", id);
-
-		User user = new UserService().getEditUser(id);
+		User user = new UserService().getEditUser(request.getParameter("id"));
 		request.setAttribute("editUser", user);
 
 		request.getRequestDispatcher("/edit.jsp").forward(request, response);
@@ -72,9 +69,6 @@ public class EditServlet extends HttpServlet {
 
 			request.setAttribute("branches", branch);
 			request.setAttribute("positions", position);
-
-			String id = request.getParameter("id");
-			request.setAttribute("id", id);
 			request.setAttribute("editUser", user);
 			request.getRequestDispatcher("edit.jsp").forward(request, response);
 		}
