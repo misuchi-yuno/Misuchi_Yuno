@@ -45,6 +45,8 @@ public class EditServlet extends HttpServlet {
 			throws IOException, ServletException {
 
 		List<String> messages = new ArrayList<String>();
+		List<User> branch = new BranchService().getBranchList();
+		List<User> position = new PositionService().getPositionList();
 
 		User user = new User();
 		user.setId(Integer.valueOf(request.getParameter("id")));
@@ -54,7 +56,6 @@ public class EditServlet extends HttpServlet {
 		user.setBranchId(Integer.valueOf(request.getParameter("branchId")));
 		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
-
 		HttpSession session = request.getSession();
 		if(isValid(request, messages) == true) {
 
@@ -63,9 +64,6 @@ public class EditServlet extends HttpServlet {
 
 		} else {
 			session.setAttribute("errorMessages", messages);
-
-			List<User> branch = new BranchService().getBranchList();
-			List<User> position = new PositionService().getPositionList();
 
 			request.setAttribute("branches", branch);
 			request.setAttribute("positions", position);
@@ -100,7 +98,6 @@ public class EditServlet extends HttpServlet {
 		} else if (StringUtils.isEmpty(password2) && !StringUtils.isEmpty(password)) {
 			messages.add("確認用パスワードを入力してください");
 		}
-
 
 
 		if (StringUtils.isEmpty(name)) {
