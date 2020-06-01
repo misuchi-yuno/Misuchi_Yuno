@@ -58,7 +58,7 @@ public class EditServlet extends HttpServlet {
 		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 		HttpSession session = request.getSession();
-		if(isValid(request, messages)) {
+		if (isValid(request, messages)) {
 
 			try {
 				new UserService().editRegister(user);
@@ -91,7 +91,7 @@ public class EditServlet extends HttpServlet {
 		String password2 = request.getParameter("password2");
 		String name = request.getParameter("name");
 
-		if (StringUtils.isEmpty(loginId))  {
+		if (StringUtils.isEmpty(loginId)) {
 			messages.add("ログインIDを入力してください");
 		} else if (!loginId.matches("[a-z A-Z 0-9]{6,20}")) {
 			messages.add("ログインIDを半角英数字6～20文字で入力してください");

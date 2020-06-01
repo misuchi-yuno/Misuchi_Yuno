@@ -7,7 +7,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>ユーザー新規登録</title>
-
 </head>
 	<body>
 		<c:if test="${not empty errorMessages }">
@@ -20,7 +19,7 @@
 			</div>
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
-		<form action="newuser" method="post">
+		<form action="newuser" method="post"  onSubmit="checkText();">
 			<label for="loginId">ログインID：</label> <input type="text" name="loginId" id="loginId" value="${errorUser.loginId}"><br/>
 			<label for="password">パスワード：</label> <input type="password" name="password" id="password" >
 			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2"><br/>
@@ -52,6 +51,19 @@
 				</c:forEach>
 			</select>
 			<input type="submit" value="登録">
+			<script type="text/javascript">
+			function checkText() {
+				const loginId = document.getElementById("loginId").value;
+				const name = document.getElementById("name").value;
+				const password = document.getElementById("passwprd").value;
+				const password2 = document.getElementById("passwprd2").value
+
+				if (loinId.length() == ) {
+					alert("
+				}
+			}
+			</script>
 		</form>
+
 	</body>
 </html>
