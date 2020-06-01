@@ -58,7 +58,7 @@ public class EditServlet extends HttpServlet {
 		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 		HttpSession session = request.getSession();
-		if(isValid(request, messages) == true) {
+		if(isValid(request, messages)) {
 
 			try {
 				new UserService().editRegister(user);

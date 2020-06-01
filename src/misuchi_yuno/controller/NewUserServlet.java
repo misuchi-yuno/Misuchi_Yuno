@@ -48,7 +48,7 @@ public class NewUserServlet extends HttpServlet {
 		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 		HttpSession session = request.getSession();
-		if(isValid(request, messages) == true) {
+		if(isValid(request, messages)) {
 
 			new UserService().register(user);
 			response.sendRedirect("./");
