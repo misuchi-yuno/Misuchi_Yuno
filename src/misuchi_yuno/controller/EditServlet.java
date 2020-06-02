@@ -39,8 +39,6 @@ public class EditServlet extends HttpServlet {
 		request.getRequestDispatcher("/edit.jsp").forward(request, response);
 	}
 
-
-
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -58,8 +56,8 @@ public class EditServlet extends HttpServlet {
 		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 		HttpSession session = request.getSession();
-		if (isValid(request, messages)) {
 
+		if (isValid(request, messages)) {
 			try {
 				new UserService().editRegister(user);
 			} catch (NoRowsUpdatedRuntimeException e) {
@@ -72,7 +70,6 @@ public class EditServlet extends HttpServlet {
 				return;
 			}
 				response.sendRedirect("./");
-
 		} else {
 			session.setAttribute("errorMessages", messages);
 
@@ -99,17 +96,17 @@ public class EditServlet extends HttpServlet {
 
 		if (StringUtils.isEmpty(password) && !StringUtils.isEmpty(password2)) {
 			messages.add("パスワードを入力してください");
-		} else if (!password.equals(password2)) {
-			messages.add("パスワードと確認用パスワードがちがいます");
+		} else {
+			if (!password.equals(password2)) {
+				messages.add("パスワードと確認用パスワードがちがいます");
+			}
+			if (!password.matches("[ -~]*$")) {
+				messages.add("パスワードは記号を含む半角英数字で入力してください");
+			}
+			if (password.length() > 0 && password.length() < 6 || password.length() > 20) {
+				messages.add("パスワードを6～20文字で入力してください");
+			}
 		}
-		if (!password.matches("[ -~]*$")) {
-			messages.add("パスワードは記号を含む半角英数字6～20文字で入力してください");
-		} else if (password.length() > 0 && password.length() < 6 || password.length() > 20) {
-			messages.add("パスワードを6～20文字で入力してください");
-		} else if (StringUtils.isEmpty(password2) && !StringUtils.isEmpty(password)) {
-			messages.add("確認用パスワードを入力してください");
-		}
-
 
 		if (StringUtils.isEmpty(name)) {
 			messages.add("名前を入力してください");
@@ -126,7 +123,6 @@ public class EditServlet extends HttpServlet {
 				}
 			}
 		}
-
 		return messages.size() == 0;
 	}
 }

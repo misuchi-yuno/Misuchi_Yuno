@@ -12,7 +12,7 @@ import misuchi_yuno.beans.Activity;
 import misuchi_yuno.service.UserService;
 
 @WebServlet(urlPatterns = { "/changeActivity"})
-public class ChangeActivity  extends HttpServlet {
+public class ChangeActivity extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override

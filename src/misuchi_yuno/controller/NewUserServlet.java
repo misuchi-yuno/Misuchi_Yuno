@@ -48,8 +48,8 @@ public class NewUserServlet extends HttpServlet {
 		user.setPositionId(Integer.valueOf(request.getParameter("positionId")));
 
 		HttpSession session = request.getSession();
-		if (isValid(request, messages)) {
 
+		if (isValid(request, messages)) {
 			new UserService().register(user);
 			response.sendRedirect("./");
 		} else {
@@ -65,6 +65,7 @@ public class NewUserServlet extends HttpServlet {
 			request.getRequestDispatcher("/newuser.jsp").forward(request, response);
 		}
 	}
+
 	private boolean isValid(HttpServletRequest request, List<String> messages) {
 
 		String loginId = request.getParameter("loginId");
@@ -78,20 +79,19 @@ public class NewUserServlet extends HttpServlet {
 			messages.add("ログインIDを半角英数字6～20文字で入力してください");
 		}
 
-		if (!password.equals(password2)) {
-			messages.add("パスワードと確認用パスワードがちがいます");
-		}
-
 		if (StringUtils.isEmpty(password)) {
 			messages.add("パスワードを入力してください");
-		} else if (!password.matches("[ -~]*$")) {
-			messages.add("パスワードは記号を含む半角英数字6～20文字で入力してください");
-		} else if (password.length() < 6 || password.length() > 20) {
-			messages.add("パスワードを6～20文字で入力してください");
-		} else if (StringUtils.isEmpty(password2)) {
-			messages.add("確認用パスワードを入力してください");
+		} else {
+			if (!password.equals(password2)) {
+				messages.add("パスワードと確認用パスワードがちがいます");
+			}
+			if (!password.matches("[ -~]*$")) {
+				messages.add("パスワードは記号を含む半角英数字で入力してください");
+			}
+			if (password.length() < 6 || password.length() > 20) {
+				messages.add("パスワードを6～20文字で入力してください");
+			}
 		}
-
 
 		if (StringUtils.isEmpty(name)) {
 			messages.add("名前を入力してください");
