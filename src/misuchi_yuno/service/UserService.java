@@ -15,7 +15,6 @@ import misuchi_yuno.utils.CipherUtil;
 public class UserService {
 
 	public int count(String loginId) {
-
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -35,9 +34,7 @@ public class UserService {
 		}
 	}
 
-
 	public void register(User user) {
-
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -67,7 +64,6 @@ public class UserService {
 			List<User> ret = new UserDao().getUsers(connection);
 
 			commit(connection);
-
 			return ret;
 		} catch (RuntimeException e) {
 			rollback(connection);
@@ -78,7 +74,6 @@ public class UserService {
 		} finally {
 			close(connection);
 		}
-
 	}
 
 	public User getEditUser(String id) {
@@ -89,7 +84,6 @@ public class UserService {
 			User user = new UserDao().getEditUser(connection, id);
 
 			commit(connection);
-
 			return user;
 		} catch (RuntimeException e) {
 			rollback(connection);
@@ -129,7 +123,6 @@ public class UserService {
 	}
 
 	public void activityRegister(Activity activity) {
-
 		Connection connection = null;
 		try {
 			connection = getConnection();

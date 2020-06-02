@@ -14,13 +14,12 @@ import org.apache.commons.lang.StringUtils;
 import misuchi_yuno.beans.Activity;
 import misuchi_yuno.beans.User;
 import misuchi_yuno.exception.NoRowsUpdatedRuntimeException;
-import  misuchi_yuno.exception.SQLRuntimeException;
+import misuchi_yuno.exception.SQLRuntimeException;
 
 public class UserDao {
 
 
 	public int getCount(Connection connection, String loginId) {
-
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder ();
@@ -52,9 +51,7 @@ public class UserDao {
 
 	}
 
-
 	public void insert(Connection connection, User user) {
-
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
@@ -166,7 +163,6 @@ public class UserDao {
 						positions.setName(name);
 
 						ret.add(positions);
-
 					}
 					return ret;
 				} finally {
@@ -175,7 +171,6 @@ public class UserDao {
 	}
 
 	public List<User> getUsers(Connection connection) {
-
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
@@ -204,7 +199,6 @@ public class UserDao {
 		} finally {
 			close(ps);
 		}
-
 	}
 
 	private List<User> toUsersList(ResultSet rs)
@@ -241,7 +235,6 @@ public class UserDao {
 		}
 
 	public User getEditUser(Connection connection, String id) {
-
 		PreparedStatement ps = null;
 		try {
 			StringBuilder sql = new StringBuilder();
@@ -292,8 +285,6 @@ public class UserDao {
 		}
 		return user;
 	}
-
-
 
 	public void update(Connection connection, User user) {
 		PreparedStatement ps = null;

@@ -7,7 +7,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>編集画面</title>
-
+		<link href="./style.css" rel="stylesheet" type="text/css">
 	</head>
 <body>
 	<label>編集</label>
@@ -26,12 +26,16 @@
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
 
-		<form action="edit" method="post">
+		<form action="edit" method="post" name="edit" onsubmit="return checkText()">
 			<input type="hidden" name="id" id="id" value="${editUser.id}">
-			<label for="loginId">ログインID：</label> <input type="text" name="loginId" id="loginId" value=${editUser.loginId } ><br/>
+			<label for="loginId">ログインID：</label> <input type="text" name="loginId" id="loginId" value=${editUser.loginId } required>
+			<p id="loginIdError"></p><br/>
 			<label for="password">パスワード：</label> <input type="password" name="password" id="password" >
-			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2"><br/>
-			<label for="name">名前：</label> <input name="name" id="name" value="${editUser.name}"><br/>
+			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2">
+			<p id="passwordError"></p>
+			<p id="conPasswordError"></p><br/>
+			<label for="name">名前：</label> <input name="name" id="name" value="${editUser.name}" required>
+			<p id="nameError"></p><br/>
 			<label>支店：</label>
 			<select name="branchId">
 				<c:forEach items="${branches}" var="branch">
@@ -60,6 +64,46 @@
 			</select>
 			<input type="submit" value="登録">
 		</form>
+		<script type="text/javascript">
+			function checkText() {
+				var error = true;
+				nameError.innerHTML = "";
+				loginIdError.innerHTML = "";
+				passwordError.innerHTML = "";
+				conPasswordError.innerHTML = "";
+
+				const name = document.getElementById("name").value;
+				if (name.length >= 11) {
+					nameError.innerHTML = "10文字以内で入力してください";
+					error = false;
+				}
+
+				const loginId = document.getElementById("loginId").value;
+				const trueLoginId = /^[a-z A-Z 0-9]{6,20}$/;
+				if (!loginId.match(trueLoginId)) {
+					loginIdError.innerHTML = "半角英数字6～20文字で入力してください";
+					error = false;
+				}
+
+				const password = document.getElementById("password").value;
+				const password2 = document.getElementById("password2").value;
+				const truePassword = /^[ -~]{6,20}$/
+				if (!password && password2) {
+					passwordError.innerHTML = "パスワードを入力してください";
+					error = false;
+				} else {
+					if (password != password2) {
+						conPasswordError.innerHTML = "パスワードと確認用パスワードが違います";
+						error = false;
+					}
+					if (!password.match(truePassword)) {
+						passwordError.innerHTML = "パスワードは記号を含む半角英数字6～20文字で入力してください";
+						error = false;
+					}
+				}
+				return error;
+			}
+		</script>
 	</div>
 </body>
 </html>

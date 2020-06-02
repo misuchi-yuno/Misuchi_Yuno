@@ -28,7 +28,6 @@ public class EncodingFilter implements Filter {
 		}
 
 		chain.doFilter(request, response); // サーブレットを実行
-
 	}
 
 	@Override
@@ -46,5 +45,4 @@ public class EncodingFilter implements Filter {
 	@Override
 	public void destroy() {
 	}
-
 }
