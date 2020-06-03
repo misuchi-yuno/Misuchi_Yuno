@@ -31,7 +31,7 @@ public class NewUserServlet extends HttpServlet {
 
 		request.setAttribute("branches", branch);
 		request.setAttribute("positions", position);
-		request.getRequestDispatcher("newuser.jsp").forward(request, response);
+		request.getRequestDispatcher("/newuser.jsp").forward(request, response);
 	}
 
 	@Override

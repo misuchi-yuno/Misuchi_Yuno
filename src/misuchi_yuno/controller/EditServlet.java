@@ -66,7 +66,7 @@ public class EditServlet extends HttpServlet {
 				request.setAttribute("branches", branch);
 				request.setAttribute("positions", position);
 				request.setAttribute("editUser", user);
-				request.getRequestDispatcher("edit.jsp").forward(request, response);
+				request.getRequestDispatcher("/edit.jsp").forward(request, response);
 				return;
 			}
 				response.sendRedirect("./");
@@ -76,7 +76,7 @@ public class EditServlet extends HttpServlet {
 			request.setAttribute("branches", branch);
 			request.setAttribute("positions", position);
 			request.setAttribute("editUser", user);
-			request.getRequestDispatcher("edit.jsp").forward(request, response);
+			request.getRequestDispatcher("/edit.jsp").forward(request, response);
 		}
 	}
 
