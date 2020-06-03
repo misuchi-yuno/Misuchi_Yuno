@@ -94,7 +94,6 @@ public class UserService {
 		} finally {
 			close(connection);
 		}
-
 	}
 
 	public void editRegister(User user) {

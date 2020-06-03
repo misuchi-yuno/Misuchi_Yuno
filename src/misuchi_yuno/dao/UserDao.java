@@ -18,11 +18,10 @@ import misuchi_yuno.exception.SQLRuntimeException;
 
 public class UserDao {
 
-
 	public int getCount(Connection connection, String loginId) {
 		PreparedStatement ps = null;
 		try {
-			StringBuilder sql = new StringBuilder ();
+			StringBuilder sql = new StringBuilder();
 			sql.append("SELECT COUNT(*) ");
 			sql.append("FROM users ");
 			sql.append("WHERE login_id = ?;");
@@ -39,8 +38,8 @@ public class UserDao {
 		} finally {
 			close(ps);
 		}
-
 	}
+
 	private int toCount(ResultSet rs) throws SQLException {
 
 		int countResult = 0;
@@ -48,7 +47,6 @@ public class UserDao {
 			countResult = rs.getInt(1);
 		}
 		return countResult;
-
 	}
 
 	public void insert(Connection connection, User user) {
@@ -263,7 +261,6 @@ public class UserDao {
 		} finally {
 			close(ps);
 		}
-
 	}
 
 	private User toEditUserList(ResultSet rs)

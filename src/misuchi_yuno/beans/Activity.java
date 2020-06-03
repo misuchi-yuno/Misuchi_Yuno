@@ -4,6 +4,7 @@ public class Activity {
 
 	private String loginId;
 	private int activity;
+
 	public String getLoginId() {
 		return loginId;
 	}
@@ -16,5 +17,4 @@ public class Activity {
 	public void setActivity(int activity) {
 		this.activity = activity;
 	}
-
 }

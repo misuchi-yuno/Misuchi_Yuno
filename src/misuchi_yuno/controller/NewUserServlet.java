@@ -106,6 +106,3 @@ public class NewUserServlet extends HttpServlet {
 		return messages.size() == 0;
 	}
 }
-
-
-
