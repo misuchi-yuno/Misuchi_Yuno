@@ -7,7 +7,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>ユーザー新規登録</title>
-	<link href="./style.css" rel="stylesheet" type="text/css">
+	<link href="./js.css" rel="stylesheet" type="text/css">
 </head>
 	<body>
 		<c:if test="${not empty errorMessages }">
@@ -22,13 +22,13 @@
 		</c:if>
 		<form action="newuser" method="post" name="newuser" onsubmit="return checkText();">
 			<label for="loginId">ログインID：</label> <input type="text" name="loginId" id="loginId" value="${errorUser.loginId}" required>
-			<p id="loginIdError"></p><br/>
+			<p class="errorMessages" id="loginIdError"></p><br/>
 			<label for="password">パスワード：</label> <input type="password" name="password" id="password" required>
 			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2" required>
-			<p id="passwordError"></p>
-			<p id="conPasswordError"></p><br/>
+			<p class="errorMessages" id="passwordError"></p>
+			<p class="errorMessages" id="conPasswordError"></p><br/>
 			<label for="name">名前：</label> <input name="name" id="name" value="${errorUser.name}" required><br/>
-			<p id="nameError"></p><br/><br/>
+			<p class="errorMessages" id="nameError"></p><br/><br/>
 			<label>支店：</label>
 			<select name="branchId">
 				<c:forEach items="${branches}" var="branch">

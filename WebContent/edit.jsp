@@ -7,14 +7,11 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>編集画面</title>
-		<link href="./style.css" rel="stylesheet" type="text/css">
+		<link href="./js.css" rel="stylesheet" type="text/css">
 	</head>
 <body>
 	<label>編集</label>
 	<div class="main-contents">
-		<label>編集するユーザーのID</label>
-		<c:out value="${id}"></c:out>
-
 		<c:if test="${not empty errorMessages }">
 			<div class="errorMessages">
 				<ul>
@@ -29,13 +26,13 @@
 		<form action="edit" method="post" name="edit" onsubmit="return checkText()">
 			<input type="hidden" name="id" id="id" value="${editUser.id}">
 			<label for="loginId">ログインID：</label> <input type="text" name="loginId" id="loginId" value=${editUser.loginId } required>
-			<p id="loginIdError"></p><br/>
+			<p class="errorMessages" id="loginIdError"></p><br/>
 			<label for="password">パスワード：</label> <input type="password" name="password" id="password" >
 			<label for="password2">確認用パスワード：</label> <input type="password" name="password2" id="password2">
-			<p id="passwordError"></p>
-			<p id="conPasswordError"></p><br/>
+			<p class="errorMessages" id="passwordError"></p>
+			<p class="errorMessages" id="conPasswordError"></p><br/>
 			<label for="name">名前：</label> <input name="name" id="name" value="${editUser.name}" required>
-			<p id="nameError"></p><br/>
+			<p class="errorMessages" id="nameError"></p><br/>
 			<label>支店：</label>
 			<select name="branchId">
 				<c:forEach items="${branches}" var="branch">
@@ -91,7 +88,7 @@
 				if (!password && password2) {
 					passwordError.innerHTML = "パスワードを入力してください";
 					error = false;
-				} else {
+				} else if (password) {
 					if (password != password2) {
 						conPasswordError.innerHTML = "パスワードと確認用パスワードが違います";
 						error = false;
