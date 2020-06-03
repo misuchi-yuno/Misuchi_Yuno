@@ -23,7 +23,7 @@
 			<c:remove var="errorMessages" scope="session" />
 		</c:if>
 
-		<form action="edit" method="post" name="edit" onsubmit="return checkText()">
+		<form action="edit" method="post" name="edituser" onsubmit="return checkText()">
 			<input type="hidden" name="id" id="id" value="${editUser.id}">
 			<label for="loginId">ログインID：</label> <input type="text" name="loginId" id="loginId" value=${editUser.loginId } required>
 			<p class="errorMessages" id="loginIdError"></p><br/>
@@ -69,21 +69,21 @@
 				passwordError.innerHTML = "";
 				conPasswordError.innerHTML = "";
 
-				const name = document.getElementById("name").value;
+				const name = edituser.name.value;
 				if (name.length >= 11) {
 					nameError.innerHTML = "10文字以内で入力してください";
 					error = false;
 				}
 
-				const loginId = document.getElementById("loginId").value;
+				const loginId = edituser.loginId.value;
 				const trueLoginId = /^[a-z A-Z 0-9]{6,20}$/;
 				if (!loginId.match(trueLoginId)) {
 					loginIdError.innerHTML = "半角英数字6～20文字で入力してください";
 					error = false;
 				}
 
-				const password = document.getElementById("password").value;
-				const password2 = document.getElementById("password2").value;
+				const password = edituser.password.value;
+				const password2 = edituser.password2.value;
 				const truePassword = /^[ -~]{6,20}$/
 				if (!password && password2) {
 					passwordError.innerHTML = "パスワードを入力してください";

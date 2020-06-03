@@ -65,21 +65,21 @@
 					passwordError.innerHTML = "";
 					conPasswordError.innerHTML = "";
 
-					const name = document.getElementById("name").value;
+					const name = newuser.name.value;
 					if (name.length >= 11) {
 						nameError.innerHTML = "10文字以内で入力してください";
 						error = false;
 					}
 
-					const loginId = document.getElementById("loginId").value;
+					const loginId = newuser.loginId.value;
 					const trueLoginId = /^[a-z A-Z 0-9]{6,20}$/;
 					if (!loginId.match(trueLoginId)) {
 						loginIdError.innerHTML = "半角英数字6～20文字で入力してください";
 						error = false;
 					}
 
-					const password = document.getElementById("password").value;
-					const password2 = document.getElementById("password2").value;
+					const password = newuser.password.value;
+					const password2 = newuser.password2.value;
 					const truePassword = /^[ -~]{6,20}$/
 					if (password != password2) {
 						conPasswordError.innerHTML = "パスワードと確認用パスワードが違います";
