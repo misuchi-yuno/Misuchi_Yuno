@@ -70,7 +70,7 @@
 				conPasswordError.innerHTML = "";
 
 				const name = edituser.name.value;
-				if (name.length >= 11) {
+				if (name.length > 10) {
 					nameError.innerHTML = "10文字以内で入力してください";
 					error = false;
 				}
