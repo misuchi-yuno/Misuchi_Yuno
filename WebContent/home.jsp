@@ -15,7 +15,6 @@
 		<div class="header">
 			<a href="./">ホーム</a>
 			<a href="newuser">新規ユーザー登録</a>
-			<c:out value="${String}"></c:out>
 		</div>
 		<div class="informations">
 			<c:forEach items="${users}" var="user">
